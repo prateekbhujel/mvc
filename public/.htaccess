@@ -1,4 +1,4 @@
-Rewrite Engine On
+RewriteEngine On
 
 #accept loading of actual files and directories
 RewriteCond %{REQUEST_FILENAME} !-f
