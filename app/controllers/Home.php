@@ -10,7 +10,6 @@ class Home
 
     public function index()
     {
-        show("from the index function");
         $this->view('home');
     }
 
