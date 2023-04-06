@@ -1,6 +1,10 @@
 <?php
 
 
+/** 
+ * Main Class App
+*/
+
 class App
 {
 	private $controller = 'Home';
@@ -17,7 +21,7 @@ class App
 	{
 		$URL = $this->splitURL();
 
-		/** select controller **/
+		/** Select controller **/
 		$filename = "../app/controllers/".ucfirst($URL[0]).".php";
 		if(file_exists($filename))
 		{
@@ -33,7 +37,7 @@ class App
 
 		$controller = new $this->controller;
 
-		/** select method **/
+		/** Select method **/
 		if(!empty($URL[1]))
 		{
 			if(method_exists($controller, $URL[1]))
@@ -42,7 +46,7 @@ class App
 				unset($URL[1]);
 			}	
 		}
-
+	
 		call_user_func_array([$controller,$this->method], $URL);
 
 	}	

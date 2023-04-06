@@ -1,6 +1,9 @@
 <?php
 
 
+/**
+ * _404 Class
+ */
 class _404 extends Controller
 {
     public function index()

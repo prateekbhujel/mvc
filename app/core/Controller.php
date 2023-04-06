@@ -1,7 +1,10 @@
 <?php
 
+/** 
+ * Main Trait Controller
+*/
 
-class Controller
+Trait Controller
 {
 
     public function view($name)

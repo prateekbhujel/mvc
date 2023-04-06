@@ -1,10 +1,17 @@
 <?php
 
+/**
+ * Home Class
+ */
 
-class Home extends Controller
+class Home
 {
+    use controller;
+
     public function index()
     {
+        show("from the index function");
         $this->view('home');
     }
+
 }
