@@ -12,6 +12,7 @@ Trait Model
     protected $offset = 0;
     protected $order_type = "desc";
     protected $order_column = "id";
+    public $errors 		= [];
 
     public function findAll()
     {
