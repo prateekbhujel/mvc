@@ -1,3 +1,3 @@
 <h1>
-    Hello From Home view !
+   Home Page View !
 </h1>
