@@ -1,9 +1,6 @@
 <?php
 
-
-/** 
- * Main Class App
-*/
+defined('ROOTPATH') OR exit('Access Denied!');
 
 class App
 {
@@ -21,7 +18,7 @@ class App
 	{
 		$URL = $this->splitURL();
 
-		/** Select controller **/
+		/** select controller **/
 		$filename = "../app/controllers/".ucfirst($URL[0]).".php";
 		if(file_exists($filename))
 		{
@@ -35,9 +32,9 @@ class App
 			$this->controller = "_404";
 		}
 
-		$controller = new $this->controller;
+		$controller = new ('\Controller\\'.$this->controller);
 
-		/** Select method **/
+		/** select method **/
 		if(!empty($URL[1]))
 		{
 			if(method_exists($controller, $URL[1]))
@@ -46,9 +43,11 @@ class App
 				unset($URL[1]);
 			}	
 		}
-	
+
 		call_user_func_array([$controller,$this->method], $URL);
 
 	}	
 
 }
+
+

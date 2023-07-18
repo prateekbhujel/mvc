@@ -1,3 +1,1 @@
-<h1>
-    View Page Not Found !
-</h1>
+<h1>View file not found</h1>

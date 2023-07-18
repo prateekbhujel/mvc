@@ -1,16 +1,20 @@
-<?php
+<?php 
+
+namespace Controller;
+
+defined('ROOTPATH') OR exit('Access Denied!');
 
 /**
- * Home Class
+ * home class
  */
-
 class Home
 {
-    use controller;
+	use MainController;
 
-    public function index()
-    {
-        $this->view('home');
-    }
+	public function index()
+	{
+
+		$this->view('home');
+	}
 
 }

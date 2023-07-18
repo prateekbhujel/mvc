@@ -1,23 +1,26 @@
 <?php
 
+namespace Model;
+
+defined('ROOTPATH') OR exit('Access Denied!');
 
 /**
- * User Class
+ * User class
  */
 class User
 {
+	
+	use Model;
 
-    use Model;
+	protected $table = 'users';
 
-    protected $table = 'users';
+	protected $allowedColumns = [
 
-    protected $allowedColumns = [
-        
-        'name',
-        'age',
-    ];
+		'email',
+		'password',
+	];
 
-    public function validate($data)
+	public function validate($data)
 	{
 		$this->errors = [];
 
