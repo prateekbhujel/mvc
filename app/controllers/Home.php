@@ -13,8 +13,14 @@ class Home
 
 	public function index()
 	{
+		$user = new \Model\User;
+		if($user->validate($_POST))
+		{
+			$user->insert($_POST);
+			redirect('login');
+		}
 
-		$this->view('home');
+		$data['user'] = $user;
+		$this->view('home',$data);
 	}
-
 }

@@ -10,7 +10,7 @@ Trait Database
 	private function connect()
 	{
 		$string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
-		$con = new PDO($string,DBUSER,DBPASS);
+		$con = new \PDO($string,DBUSER,DBPASS);
 		return $con;
 	}
 
@@ -23,7 +23,7 @@ Trait Database
 		$check = $stm->execute($data);
 		if($check)
 		{
-			$result = $stm->fetchAll(PDO::FETCH_OBJ);
+			$result = $stm->fetchAll(\PDO::FETCH_OBJ);
 			if(is_array($result) && count($result))
 			{
 				return $result;
@@ -42,7 +42,7 @@ Trait Database
 		$check = $stm->execute($data);
 		if($check)
 		{
-			$result = $stm->fetchAll(PDO::FETCH_OBJ);
+			$result = $stm->fetchAll(\PDO::FETCH_OBJ);
 			if(is_array($result) && count($result))
 			{
 				return $result[0];

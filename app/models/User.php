@@ -13,41 +13,46 @@ class User
 	use Model;
 
 	protected $table = 'users';
+	protected $primaryKey = 'id';
 
 	protected $allowedColumns = [
 
 		'email',
 		'password',
+		'username'
 	];
 
-	public function validate($data)
-	{
-		$this->errors = [];
-
-		if(empty($data['email']))
-		{
-			$this->errors['email'] = "Email is required";
-		}else
-		if(!filter_var($data['email'],FILTER_VALIDATE_EMAIL))
-		{
-			$this->errors['email'] = "Email is not valid";
-		}
+	/****************************
+	 * Rules Include :
+	    * required	
+		* alpha
+		* apha_space
+		* email
+		* numeric
+		* unique
+		* symbol
+		* not_less_than_8_chars
+		* alpha_symbol
+		* alpha_numeric
+		* alpha_symbol
+	 *
+	***************************/
 		
-		if(empty($data['password']))
-		{
-			$this->errors['password'] = "Password is required";
-		}
-		
-		if(empty($data['terms']))
-		{
-			$this->errors['terms'] = "Please accept the terms and conditions";
-		}
+	protected $validationRules = [
 
-		if(empty($this->errors))
-		{
-			return true;
-		}
+		'email' => [
+			'required',
+			'email',
+			'unique',
+		],
+		'username' => [
+			'required',
+			'apha_space',
+		],
+		'password' => [
+			'required',
+			'not_less_than_8_chars',
+		],
+	];
 
-		return false;
-	}
 }
