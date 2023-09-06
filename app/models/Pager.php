@@ -17,9 +17,13 @@ class Pager
 	public $end 			= 1;
 	public $limit 			= 10;
 	public $nav_class 		= "";
+	public $nav_styles 		= "";
 	public $ul_class 		= "pagination justify-content-center";
+	public $ul_styles 		= "";
 	public $li_class 		= "page-item";
+	public $li_styles 		= "";
 	public $a_class 		= "page-link";
+	public $a_styles 		= "";
 
 	public function __construct($limit = 10, $extras = 1)
 	{
@@ -64,19 +68,19 @@ class Pager
 		?>
 		<br class="clearfix">
 		<div>
-			<nav class="<?=$this->nav_class?>">
-			  <ul class="<?=$this->ul_class?>">
-			    <li class="<?=$this->li_class?>"><a class="<?=$this->a_class?>" href="<?=$this->links['first']?>">First</a></li>
+			<nav class="<?=$this->nav_class?>" style="<?=$this->nav_styles?>">
+			  <ul class="<?=$this->ul_class?>" style="<?=$this->ul_styles?>">
+			    <li class="<?=$this->li_class?>" style="<?=$this->li_styles?>"><a class="<?=$this->a_class?>"  style="<?=$this->a_styles?>" href="<?=$this->links['first']?>">First</a></li>
 
 			    <?php for($x = $this->start; $x <= $this->end;$x++):?>
- 			    	<li class="<?=$this->li_class?> 
+ 			    	<li style="<?=$this->li_styles?>" class="<?=$this->li_class?> 
  			    	<?=($x == $this->page_number)?' active ':'';?>
- 			    	"><a class="<?=$this->a_class?>" href="
+ 			    	"><a style="<?=$this->a_styles?>" class="<?=$this->a_class?>" href="
  			    		<?= preg_replace('/page=[0-9]+/', "page=".$x, $this->links['current'])?>
  			    		"><?=$x?></a></li>
  				<?php endfor;?>
 
-			    <li class="<?=$this->li_class?>"><a class="<?=$this->a_class?>" href="<?=$this->links['next']?>">Next</a></li>
+			    <li class="<?=$this->li_class?>" style="<?=$this->li_styles?>"><a style="<?=$this->a_styles?>" class="<?=$this->a_class?>" href="<?=$this->links['next']?>">Next</a></li>
 			  </ul>
 			</nav>
 	 	</div>
