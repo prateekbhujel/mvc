@@ -1,0 +1,18 @@
+<?php
+
+   if (php_sapi_name() !== 'cli')
+   {
+      die("This Tool is Only For Use In Command Line.");
+   }
+
+   define('DS', DIRECTORY_SEPARATOR);
+   define('CPATH', __DIR__.DS);
+   chdir(CPATH);
+
+   $action = $argv[1] ?? 'help';
+
+   require 'app'.DS.'thunder'.DS.'init.php';
+
+   $thunder = new \Thunder\Thunder;
+
+   call_user_func_array([$thunder,'help'], []);
