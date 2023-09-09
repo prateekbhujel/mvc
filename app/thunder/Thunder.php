@@ -11,10 +11,22 @@ class Thunder
 {
     private $version = '1.0.0';
     
+    public function db()
+    {
+
+        echo "\n\rdb function\n\r";
+    }
+
     public function make()
     {
 
         echo "\n\rmake function\n\r";
+    }
+
+    public function migrate()
+    {
+
+        echo "\n\rmigate function\n\r";
     }
 
 

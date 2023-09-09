@@ -15,4 +15,20 @@
 
    $thunder = new \Thunder\Thunder;
 
-   call_user_func_array([$thunder,'help'], []);
+   if (empty($action))
+   {
+      call_user_func_array([$thunder,'help'], []);
+   } else 
+   {
+      $parts = explode(":", $action);
+
+      if (is_callable([$thunder, $parts[0]]))
+      {
+         call_user_func_array([$thunder, $parts[0]],[]);
+      }else
+      {
+         echo "\n\rThat command was not recognized. Please see below for commands. \n\r";
+         
+         call_user_func_array([$thunder,'help'], []);
+      }
+   }
