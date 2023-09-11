@@ -11,11 +11,83 @@ class Thunder
 {
     private $version = '1.0.0';
     
-    public function db()
+
+
+    public function db($argv)
     {
 
-        echo "\n\rdb function\n\r";
+        $mode       = $argv[1] ?? null; 
+        $param1  = $argv[2] ?? null;
+        
+        
+        switch ($mode) {
+            
+            
+            case 'db:create':
+                
+                /** Checks if param1 is empty **/
+                if (empty($param1)){
+        
+                    die("\n\r \033[31mError:\033[0m Database name cannot be Empty. \n\r"); // 1:30:00 #3 MVC
+                }
+                
+                $db = new Database;
+                $query = "CREATE DATABASE IF NOT EXISTS ".$param1;
+                $db->query($query);
+
+                die("\n\r\033[34mInfo:\033[0m Database Created Successfully.\n\r");
+                break;
+
+            case 'db:table':
+
+                /** Checks if param1 is empty **/
+                if (empty($param1)){
+
+                    die("\n\r \033[31mError:\033[0m Table name cannot be Empty. \n\r"); // 1:30:00 #3 MVC
+                }
+                
+                $db = new Database;
+                $query = "DESCRIBE ".$param1;
+                $res = $db->query($query);
+
+                if ($res)
+                {
+                    print_r($res);
+                    
+                }else 
+                {
+                    echo "\n\rCould Not find Data for Table : $param1 \n\r";
+                }
+
+                die();
+                
+                break;
+
+            case 'db:drop':
+                
+                /** Checks if param1 is empty **/
+                if (empty($param1)){
+
+                    die("\n\r \033[31mError:\033[0m Please Provide Database Name to 'drop' an Database. \n\r"); // 1:30:00 #3 MVC
+                }
+                
+                $db = new Database;
+                $query = "DROP DATABASE ".$param1;
+                $db->query($query);
+
+                die("\n\r\033[34mInfo:\033[0m Database Deleted Successfully.\n\r");
+                break;
+
+            case 'db:seed':
+                # code...
+                break;
+
+            default:
+                die( "\n\r Unkown Command '$argv[1]' !");
+                break;
+        }
     }
+
 
     public function make($argv)
     {
@@ -26,7 +98,7 @@ class Thunder
         /** Checks if Class Name is empty **/
         if (empty($classname)){
 
-            die("\n\r \033[31mError:\033[0m Class Name cannot be Empty.");
+            die("\n\r \033[31mError:\033[0m Class Name cannot be Empty."); // 1:30:00 #3 MVC
         }
 
         /** Clean Class Name **/
@@ -97,10 +169,11 @@ class Thunder
                 break;
 
             default:
-                die( "\n\r Unkown 'make' Commnand !");
+                die( "\n\r Unkown Command '$argv[1]' !");
                 break;
         }
     }
+
 
     public function migrate()
     {
