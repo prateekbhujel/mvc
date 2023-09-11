@@ -12,9 +12,9 @@ class User
 	
 	use Model;
 
-	protected $table = 'users';
-	protected $primaryKey = 'id';
-	protected $loginUniqueColumn = 'email';
+	protected $table 				= 'users';
+	protected $primaryKey 			= 'id';
+	protected $loginUniqueColumn 	= 'email';
 
 	protected $allowedColumns = [
 
@@ -37,7 +37,24 @@ class User
 		alpha_symbol
 	 * 
 	 ****************************/
-	protected $validationRules = [
+	protected $onInsertvalidationRules = [
+
+		'email' => [
+			'email',
+			'unique',
+			'required',
+		],
+		'username' => [
+			'alpha',
+			'required',
+		],
+		'password' => [
+			'not_less_than_8_chars',
+			'required',
+		],
+	];
+
+	protected $onUpdatevalidationRules = [
 
 		'email' => [
 			'email',
