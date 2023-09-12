@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Image manipulation class
+ * Image manipulation class #4-1:18
  */
 namespace Model;
 
