@@ -89,6 +89,35 @@ class Thunder
     }
 
 
+    public function list($argv)
+    {
+        $mode       = $argv[1] ?? null;
+        
+        switch ($mode) {
+            case 'list:migrations':
+                
+                $folder = 'app'.DS.'migrations'.DS;
+                if (!file_exists($folder))
+                {
+                    die("\033[31mError\033[0m\033[033m: No Migration Files Were Found.\033[0m\n\r");
+                }
+
+                $files = glob($folder . "*.php");
+                echo "\n\r \033[033mList of Migration files\033[0m: \n\r";
+
+                foreach ($files as $file)
+                {
+                    echo basename($file) . "\n\r" ;
+                }
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
+
+
     public function make($argv)
     {
 
@@ -203,27 +232,48 @@ class Thunder
     public function migrate($argv)
     {
 
-        $mode       = $argv[1] ?? null ;
-        $filename   = $argv[2] ?? null ;
+        $mode       = $argv[1] ?? null;
+        $filename   = $argv[2] ?? null;
 
         $filename = "app".DS."migrations".DS.$filename;
-        if (file_exists($filename))
+        if(file_exists($filename))
         {
             require $filename;
 
-            $classname = preg_match("/[a-zA-Z]+\.php$/",$filename, $match);
-            $classname = str_replace(".php", "", $match[0]);
-            
-            $myclass = new ("\Thunder\\$classname")();
-            
-            $myclass->up();
+            preg_match("/[a-zA-Z]+\.php$/",$filename, $match);
+            $classname = str_replace(".php","",$match[0]);
 
-        }else {
-            die("\n\rThis\n\r");
+            $myclass = new ("\Thunder\\$classname")();
+
+            switch ($mode) {
+                case 'migrate':
+                    $myclass->up();
+                    echo ("\n\r \033[33mTables created successfully\033[0m\n\r");
+                    
+                    break;
+                case 'migrate:rollback':
+                    $myclass->down();
+                    echo ("\n\rStatus:\033[031mTable removed successfully\033[0m\n\r");
+                    
+                    break;
+                case 'migrate:refresh':
+                    $myclass->down();
+                    $myclass->up();
+                    echo ("\n\r\033[032Info:\033[33mTables refreshed successfully\033[0m\n\r");
+                    
+                    break;
+                
+                default:
+                    $myclass->up();
+                    
+                    break;
+            }
+            
+        }else{
+            die("\n\r\033[031mMigration file could not be found\033[0m\n\r");
         }
 
-        echo "\n\r \033[32mMigration File Run Successfully\033[0m: ". basename($filename) ."\n\r";
-        
+        echo "\n\r\033[032mMigration file run successfully \033[0m:" . basename($filename) . " \n\r";
     }
 
 
@@ -239,17 +289,16 @@ class Thunder
       db:seed            =  Runs the specified seeder to populate known data into the database.
       db:table           =  Retrieves information on the selected table.
       db:drop            =  Drop/Delete a database.
-      migrate            =  Locates and runs a migration from the specified plugin folder.
-      migrate:refresh    =  Does a rollback followed by a latest to refresh the current state of the database.
-      migrate:rollback   =  Runs the 'down' method for a migration in the specifiled plugin folder.
+      migrate            =  Locates and runs a migration File.
+      migrate:refresh    =  Runs the 'down' & 'up' method for a migration file.
+      migrate:rollback   =  Runs the 'down' method for a migration file.
 
     Generators
       make:controller    =  Generates a new controller file.
       make:model         =  Generates a new model file.
       make:migration     =  Generates a new migration file.
-      make:seeder        =  Generates a new seeder file.
                          
-    Generators              
+    Others              
       list:migration     =  Dsiplay All The Migration File Available.
 
         ";

@@ -5,9 +5,9 @@ namespace Thunder;
 defined('ROOTPATH') OR exit('Access Denied!');
 
 /**
- * Test class
+ * Pages class
  */
-class Test extends Migration
+class Pages extends Migration
 {
 
 
@@ -20,12 +20,12 @@ class Test extends Migration
         $this->addColumn('date_updated datetime NULL');
         $this->addPrimaryKey('id');
         
-        $this->createTable('test');
+        $this->createTable('pages');
         
         /** Inserting an Data **/
         $this->addData('date_created', date("Y-m-d H:i:s"));
         $this->addData('date_updated', date("Y-m-d H:i:s"));
-        $this->insertData('test');
+        $this->insertData('pages');
        
         /**
         $this->addUniqueKey();
@@ -37,7 +37,7 @@ class Test extends Migration
     /** For Droping an Table **/
     public function down()
     {
-        $this->dropTable('test');
+        $this->dropTable('pages');
     } // End Method
 
 }
