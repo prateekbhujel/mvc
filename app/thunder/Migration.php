@@ -40,7 +40,7 @@ class Migration
                 $query .= "KEY (".$key . "),";
             }
             
-            $query .= trim($query, ",");
+            $query = rtrim($query, ",");
             $query .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
 
             $this->query($query);
@@ -49,11 +49,13 @@ class Migration
             $this->keys         = [];
             $this->primaryKeys  = [];
             $this->uniqueKeys   = [];
-            
-            echo "\n\rInfo: " . "\033[32m" . $table . " Table Successfully Created !" . "\033[0m\n\r"; 
-        }else{
 
-            echo "\n\Error: " . "\033[31m" . $table . "Table Could Not be Created !" . "\033[0m\n\r"; 
+        echo "\n\r\033[32mInfo:\033[0m " . $table . " Table Successfully Created !\n\r";
+
+        } else {
+
+        echo "\n\r\033[31mError:\033[0m " . $table . " Table Could Not be Created !\n\r";
+
         }
 
     }
@@ -87,7 +89,7 @@ class Migration
     {
         $this->query('DROP TABLE '.$table);
 
-        echo "\n\Info: " . "\033[32m" . $table . " Table Successfully Removed !" . "\033[0m\n\r";
+        echo "\n\r\033[32mSucess\033[0m " . ": '$table' ". " Table Successfully Removed !\n\r";
     }
 
     
@@ -99,11 +101,13 @@ class Migration
             $query = "INSERT INTO $table (". implode(",", $keys) . ") VALUES (:". implode(",:", $keys) . ")" ;
             $this->query($query,$this->data);
             $this->data   = [];
+            
+            echo "\n\r\033[32mSuccess:\033[0m " . "\033[33mData has been successfully inserted into the table: '$table'.\033[0m\n\r";
 
-            echo "\n\Info: " . "\033[32m" .  "Data Inserted Successfully in table: $table !" . "\033[0m\n\r";
         }else
         {
-            echo "\n\Error: " . "\033[31m" .  "Data Could Not Be Inserted in table: $table !" . "\033[0m\n\r";
+            echo "\n\r \033[031 Error\033[0m:"."Data Could Not Be Inserted in tabke '$table' .\n\r";
+            
         }
 
     }

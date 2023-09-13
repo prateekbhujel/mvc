@@ -9,7 +9,7 @@ defined('CPATH') OR exit('Access Denied!');
  */
 class Thunder
 {
-    private $version = '1.0.0';
+    private $version = '1.0';
     
 
 
@@ -35,7 +35,7 @@ class Thunder
                 $query = "CREATE DATABASE IF NOT EXISTS ".$param1;
                 $db->query($query);
 
-                die("\n\r\033[34mInfo:\033[0m Database Created Successfully.\n\r");
+                die("\n\r\033[34mInfo\033[0m: Database Created Successfully.\n\r");
                 break;
 
             case 'db:table':
@@ -43,7 +43,7 @@ class Thunder
                 /** Checks if param1 is empty **/
                 if (empty($param1)){
 
-                    die("\n\r \033[31mError:\033[0m Table name cannot be Empty. \n\r"); // 1:30:00 #3 MVC
+                    die("\n\r \033[31mError\033[0m: Table name cannot be Empty. \n\r"); // 1:30:00 #3 MVC
                 }
                 
                 $db = new Database;
@@ -75,7 +75,7 @@ class Thunder
                 $query = "DROP DATABASE ".$param1;
                 $db->query($query);
 
-                die("\n\r\033[34mInfo:\033[0m Database Deleted Successfully.\n\r");
+                die("\n\r\033[34mInfo\033[0m: Database Deleted Successfully.\n\r");
                 break;
 
             case 'db:seed':
@@ -98,7 +98,7 @@ class Thunder
         /** Checks if Class Name is empty **/
         if (empty($classname)){
 
-            die("\n\r \033[31mError:\033[0m Class Name cannot be Empty."); // 1:30:00 #3 MVC
+            die("\n\r \033[31mError\033[0m: Class Name cannot be Empty."); // 1:30:00 #3 MVC
         }
 
         /** Clean Class Name **/
@@ -106,7 +106,7 @@ class Thunder
         
         /** Prevents Class name to start with a number. **/
         if (preg_match("/[^A-Za-z_]+/", $classname)){
-            die("\n\r \033[31mError:\033[0m Class Name (controller name) cannot Start with Numbers.");
+            die("\n\r \033[31mError\033[0m: ClassName (controller Name) cannot Start with Numbers.");
         }
 
         switch ($mode) {
@@ -117,7 +117,7 @@ class Thunder
                 $filename = 'app'.DS.'controllers' .DS.ucfirst($classname). ".php"; 
                 if(file_exists($filename)){
 
-                    die("\n\r \033[31mError:\033[0m$classname Controller Already Exists.");
+                    die("\n\r \033[31mError\033[0m: $classname Controller Already Exists.");
                 }
                 
                 $sample_file = file_get_contents('app'.DS.'thunder'.DS.'samples'.DS.'controller-sample.php');
@@ -126,10 +126,10 @@ class Thunder
 
                  if (file_put_contents($filename, $sample_file))
                  {
-                    die("\033[34mInfo:\033[0m Controller Created Successfully.\n");
+                    die("\033[34mInfo\033[0m: Controller Created Successfully.\n");
                     
                  }else {
-                    die("\033[31mError:\033[0m Controller Creation Failed.\n");
+                    die("\033[31mError\033[0m: Failed To Create Controller.\n");
                  }
 
                 break;
@@ -140,7 +140,7 @@ class Thunder
                 $filename = 'app'.DS.'models' .DS.ucfirst($classname). ".php"; 
                 if(file_exists($filename)){
 
-                    die("\n\r \033[31mError:\033[0m$classname Model Already Exists.");
+                    die("\n\r \033[31mError\033[0m: $classname Model Already Exists.");
                 }
 
                 $sample_file = file_get_contents('app'.DS.'thunder'.DS.'samples'.DS.'model-sample.php');
@@ -152,16 +152,41 @@ class Thunder
 
                  if (file_put_contents($filename, $sample_file))
                  {
-                    die("\033[34mInfo:\033[0m Model Created Successfully.\n");
+                    die("\033[34mInfo\033[0m: Model Created Successfully.\n");
                     
                  }else {
-                    die("\033[31mError:\033[0m Model Creation Failed.\n");
+                    die("\033[31mError\033[0m: Failed To Creatd Model.\n");
                  }
 
                 break;
 
             case 'make:migration':
-                # code...
+                
+                $folder = 'app'.DS.'migrations'.DS;
+
+                if (!file_exists($folder))
+                {
+                    mkdir($folder, 077, true);
+                }
+
+                $filename = $folder . date("jS_M_Y_H_i_s_") . ucfirst($classname). ".php"; 
+                if(file_exists($filename)){
+
+                    die("\n\r \033[31mError:\033[0m$classname Migration File Already Exists.");
+                }
+
+                $sample_file = file_get_contents('app'.DS.'thunder'.DS.'samples'.DS.'migration-sample.php');
+                $sample_file = preg_replace("/\{CLASSNAME\}/", ucfirst($classname), $sample_file);
+                $sample_file = preg_replace("/\{classname\}/", strtolower($classname), $sample_file);
+
+                    if (file_put_contents($filename, $sample_file))
+                    {
+                    die("\033[34mInfo\033[0m\033[033m: Migration File Created \033[0m: ".basename($filename) . " \n\r");
+                    
+                    }else {
+                    die("\033[31mError\033[0m: Failed To Create Migration File.\n\r");
+                    }
+
                 break;
 
             case 'make:seeder':
@@ -175,10 +200,30 @@ class Thunder
     }
 
 
-    public function migrate()
+    public function migrate($argv)
     {
 
-        echo "\n\rmigate function\n\r";
+        $mode       = $argv[1] ?? null ;
+        $filename   = $argv[2] ?? null ;
+
+        $filename = "app".DS."migrations".DS.$filename;
+        if (file_exists($filename))
+        {
+            require $filename;
+
+            $classname = preg_match("/[a-zA-Z]+\.php$/",$filename, $match);
+            $classname = str_replace(".php", "", $match[0]);
+            
+            $myclass = new ("\Thunder\\$classname")();
+            
+            $myclass->up();
+
+        }else {
+            die("\n\rThis\n\r");
+        }
+
+        echo "\n\r \033[32mMigration File Run Successfully\033[0m: ". basename($filename) ."\n\r";
+        
     }
 
 
@@ -203,7 +248,10 @@ class Thunder
       make:model         =  Generates a new model file.
       make:migration     =  Generates a new migration file.
       make:seeder        =  Generates a new seeder file.
-            
+                         
+    Generators              
+      list:migration     =  Dsiplay All The Migration File Available.
+
         ";
     }
 }

@@ -5,11 +5,10 @@ namespace Thunder;
 defined('ROOTPATH') OR exit('Access Denied!');
 
 /**
- * {CLASSNAME} class
+ * Posts class
  */
-class {CLASSNAME} extends Migration
+class Posts extends Migration
 {
-
 
     /** For Creating an Table **/
     public function up()
@@ -20,12 +19,12 @@ class {CLASSNAME} extends Migration
         $this->addColumn('date_updated datetime NULL');
         $this->addPrimaryKey('id');
         
-        $this->createTable('{classname}');
+        $this->createTable('posts');
         
         /** Inserting an Data **/
         $this->addData('date_created', date("Y-m-d H:i:s"));
         $this->addData('date_updated', date("Y-m-d H:i:s"));
-        $this->insertData('{classname}');
+        $this->insertData('posts');
        
         /**
         $this->addUniqueKey();
@@ -37,7 +36,7 @@ class {CLASSNAME} extends Migration
     /** For Droping an Table **/
     public function down()
     {
-        $this->dropTable('{classname}');
+        $this->dropTable('posts');
     } // End Method
 
 }
