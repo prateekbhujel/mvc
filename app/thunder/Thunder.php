@@ -112,7 +112,7 @@ class Thunder
                 break;
             
             default:
-                # code...
+                die("\033[031mError\033[0m : \033[33mNo Such Command As $argv[1]\033[0m\n\r".$this->help());
                 break;
         }
     }
