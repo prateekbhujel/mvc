@@ -77,8 +77,8 @@ class User
 		{
 			//add extra user columns here
 			$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-			$data['date'] = date("Y-m-d H:i:s");
 			$data['date_created'] = date("Y-m-d H:i:s");
+			$data['date_updated'] = date("Y-m-d H:i:s");
 
 			$this->insert($data);
 			redirect('login');
