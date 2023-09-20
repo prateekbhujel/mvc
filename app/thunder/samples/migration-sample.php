@@ -19,6 +19,10 @@ class {CLASSNAME} extends Migration
         $this->addColumn('date_created datetime NULL');
         $this->addColumn('date_updated datetime NULL');
         $this->addPrimaryKey('id');
+        /**
+        $this->addUniqueKey();
+        $this->addKey();
+        */
         
         $this->createTable('{classname}');
         
@@ -27,9 +31,6 @@ class {CLASSNAME} extends Migration
         $this->addData('date_updated', date("Y-m-d H:i:s"));
         $this->insertData('{classname}');
        
-        /**
-        $this->addUniqueKey();
-        */
 
     } // End Method
 
