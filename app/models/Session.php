@@ -95,6 +95,19 @@ class Session
 		return false;
 	}
 
+		/* Static function for is_logged_in */
+		public static function isLoggedIn(): bool
+		{
+			$session = new self();
+			$session->start_session();
+	
+			if (!empty($_SESSION[$session->userkey])) {
+				return true;
+			}
+	
+			return false;
+		}
+	
 	/** gets data from a column in the session user data **/
 	public function user(string $key = '', mixed $default = ''):mixed
 	{
