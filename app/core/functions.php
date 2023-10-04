@@ -352,3 +352,24 @@ function delete_images_from_content(string $content, string $content_new = ''):v
 
 }
 
+/* ---------------------------------------------------------
+  | gets the data of specific users table column passed into.
+  -----------------------------------------------------------
+*/
+function user($column = "")
+{
+	$ses = new \Core\Session;
+	return $ses->user($column);
+}
+
+
+/* -----------------------------------------------
+  | Fancy way of dumping | (inspired by laravel). |
+  ------------------------------------------------
+*/
+function dd($data)
+{
+	echo '<pre>';
+		die(var_dump($data));
+	echo '</pre>';
+}
